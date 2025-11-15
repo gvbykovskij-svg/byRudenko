@@ -329,7 +329,7 @@ def history_command(message):
 @bot.message_handler(commands=['reset'])
 def reset_command(message):
     """Команда для сброса данных (только для администратора)"""
-    if message.from_user.id == get_bot_data('target_user_id'):
+    if message.from_user.id != get_bot_data('target_user_id'):
         set_bot_data('rating', 0)
         
         conn = get_db_connection()
@@ -537,3 +537,4 @@ if __name__ == "__main__":
             logger.error(f"❌ Ошибка в работе бота: {e}")
             logger.info("🔄 Перезапуск через 10 секунд...")
             time.sleep(10)
+
