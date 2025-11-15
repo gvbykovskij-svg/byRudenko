@@ -4,16 +4,21 @@ from telebot import types
 import sqlite3
 import json
 import logging
+import time
 
 # Настройка логирования
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    format='%(asctime)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
 
 # Получение токена из переменных окружения
-BOT_TOKEN = os.environ.get('BOT_TOKEN', '8490400287:AAHAw5scIAkm5fO7m-MINQ5VmM0k2aSYdk0')
+BOT_TOKEN = os.environ.get('BOT_TOKEN')
+if not BOT_TOKEN:
+    logger.error("BOT_TOKEN не установлен!")
+    exit(1)
+
 bot = telebot.TeleBot(BOT_TOKEN)
 
 
@@ -549,19 +554,23 @@ def handle_text_messages(message):
 
 
 # Инициализация при запуске
-init_db()
+"""init_db()
 init_bot_data()
-logger.info("База данных инициализирована")
+logger.info("База данных инициализирована")"""
 
 # Запуск бота с обработкой ошибок
+
+
 if __name__ == "__main__":
-    logger.info("Бот запускается...")
+    logger.info("Запуск бота...")
+    init_db()
+    init_bot_data()
+
     while True:
         try:
-            bot.polling(none_stop=True, interval=0, timeout=20)
+            logger.info("Бот запущен и работает")
+            bot.polling(none_stop=True, timeout=60)
         except Exception as e:
             logger.error(f"Ошибка: {e}")
             logger.info("Перезапуск через 10 секунд...")
-            import time
-
             time.sleep(10)
