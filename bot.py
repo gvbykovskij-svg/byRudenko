@@ -442,7 +442,6 @@ def help_command(message):
         "/history - история изменений\n"
         "/status - проверить работу бота\n"
         "/help - эта справка\n\n"
-        "🤖 Бот работает на Render.com 24/7"
     )
     bot.send_message(message.chat.id, help_text)
 
@@ -693,3 +692,4 @@ if __name__ == "__main__":
             logger.info("🔄 Перезапуск через 10 секунд...")
 
             time.sleep(10)
+
